@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 60px 20px;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .avatar-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg, #6366f1, #8b5cf6, #6366f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-header p {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+
+        .welcome-banner {
+            background-color: #10241a;
+            border: 1px solid #1e4d33;
+            color: #4ade80;
+            font-size: 14px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background-color: #121212;
+            border: 1px solid #1f1f1f;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #1f1f1f;
+            font-size: 14px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row .label {
+            color: #a0a0a0;
+        }
+
+        .info-row .value {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .bio-text {
+            font-size: 14px;
+            color: #cfcfcf;
+            line-height: 1.6;
+        }
+
+        .bio-empty {
+            background-color: #1f1a10;
+            border: 1px solid #4d3d1e;
+            color: #fbbf24;
+            font-size: 14px;
+            padding: 14px 16px;
+            border-radius: 8px;
+        }
+
+        .bio-empty a {
+            color: #fbbf24;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #6366f1;
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            border: 1px solid #333333;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="avatar-circle">{{ user.username|first|upper }}</div>
+            <div>
+                <h1>{{ user.username }}</h1>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+
+        {% if created %}
+            <div class="welcome-banner">👋 Welcome! Your profile has been created.</div>
+        {% else %}
+            <div class="welcome-banner">👋 Welcome back!</div>
+        {% endif %}
+
+        <div class="card">
+            <h2>Account Information</h2>
+            <div class="info-row">
+                <span class="label">Username</span>
+                <span class="value">{{ user.username }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Email</span>
+                <span class="value">{{ user.email }}</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Bio</h2>
+            {% if user.profile.bio %}
+                <p class="bio-text">{{ user.profile.bio }}</p>
+            {% else %}
+                <div class="bio-empty">
+                    You haven't added a bio yet. <a href="{% url 'edit_profile' %}">Add one now</a>.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'edit_profile' %}" class="btn-primary">
+                {% if user.profile.bio %}Edit Bio{% else %}Add Bio{% endif %}
+            </a>
+            <a href="{% url 'home' %}" class="btn-secondary">Back Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - Home</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            border-bottom: 1px solid #1f1f1f;
+        }
+
+        .navbar .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #cfcfcf;
+            font-size: 15px;
+        }
+
+        .navbar .nav-links a.signup-btn {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 100px 48px 60px 48px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: #a0a0a0;
+            line-height: 1.5;
+            max-width: 550px;
+            margin-bottom: 32px;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero .cta-buttons a {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .hero .cta-primary {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .hero .cta-secondary {
+            border: 1px solid #333333;
+            color: #ffffff;
+        }
+
+        /* TASKS SECTION */
+        .tasks-section {
+            padding: 40px 48px 100px 48px;
+            border-top: 1px solid #1f1f1f;
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .tasks-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .tasks-header a.create-btn {
+            text-decoration: none;
+            background-color: #6366f1;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background-color: #121212;
+            border: 1px solid #1f1f1f;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .empty-state {
+            background-color: #121212;
+            border: 1px solid #1f1f1f;
+            border-radius: 10px;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #a0a0a0;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .empty-state a {
+            text-decoration: none;
+            background-color: #6366f1;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* TASK TABLE */
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #121212;
+            border: 1px solid #1f1f1f;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .task-table th {
+            text-align: left;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a0a0a0;
+            padding: 14px 16px;
+            border-bottom: 1px solid #1f1f1f;
+            background-color: #161616;
+        }
+
+        .task-table td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #1f1f1f;
+            vertical-align: top;
+        }
+
+        .task-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .task-table .task-title {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .task-table .task-desc {
+            color: #a0a0a0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-done {
+            background-color: #10241a;
+            color: #4ade80;
+            border: 1px solid #1e4d33;
+        }
+
+        .status-pending {
+            background-color: #1f1a10;
+            color: #fbbf24;
+            border: 1px solid #4d3d1e;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btns a {
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .btn-edit {
+            border: 1px solid #6366f1;
+            color: #6366f1;
+        }
+
+        .btn-delete {
+            border: 1px solid #f87171;
+            color: #f87171;
+            cursor: pointer;
+            background: none;
+        }
+
+        /* DELETE MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background-color: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-box h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #0a0a0a;
+        }
+
+        .modal-box p {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-cancel {
+            background-color: #f0f0f0;
+            color: #0a0a0a;
+        }
+
+        .modal-confirm {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">Task Manager</a>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username|capfirst }}</span>
+                <a href="{% url 'profile' %}" class="signup-btn" style="background-color:#161616;color:#ffffff;border:1px solid #2a2a2a;">Profile</a>
+                <a href="{% url 'logout' %}" class="signup-btn">Log out</a>
+            {% else %}
+                <a href="{% url 'login' %}">Log in</a>
+                <a href="{% url 'register' %}" class="signup-btn">Sign up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>The task management system for teams that ship.</h1>
+        <p>Purpose-built for organizing, tracking, and completing work. Stay on top of every task, every deadline.</p>
+        <div class="cta-buttons">
+            {% if user.is_authenticated %}
+                {% if just_registered %}
+                    <a href="{% url 'create_task' %}" class="cta-primary">Get Started</a>
+                {% else %}
+                    <a href="#tasks-section" class="cta-primary">View Your Tasks</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'register' %}" class="cta-primary">Get Started</a>
+                <a href="{% url 'login' %}" class="cta-secondary">Log in</a>
+            {% endif %}
+        </div>
+    </section>
+
+    {% if user.is_authenticated %}
+    <section class="tasks-section" id="tasks-section">
+        <div class="tasks-header">
+            <h2>Your Tasks</h2>
+            <a href="{% url 'create_task' %}" class="create-btn">+ Create Task</a>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="label">Total Tasks</div>
+                <div class="value">{{ total_tasks }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Completed</div>
+                <div class="value">{{ completed_tasks }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Pending</div>
+                <div class="value">{{ pending_tasks }}</div>
+            </div>
+        </div>
+
+        {% if tasks %}
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td class="task-title">{{ task.title }}</td>
+                            <td class="task-desc">{{ task.description|default:"—" }}</td>
+                            <td>
+                                {% if task.done %}
+                                    <span class="status-badge status-done">Completed</span>
+                                {% else %}
+                                    <span class="status-badge status-pending">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="{% url 'update_task' task.id %}" class="btn-edit">Edit</a>
+                                    <button type="button" class="btn-delete" onclick="openDeleteModal('{% url 'delete_task' task.id %}')">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <h3>No Tasks Yet</h3>
+                <p>Click the button below to create your first task.</p>
+                <a href="{% url 'create_task' %}">Create Task</a>
+            </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-box">
+            <h3>Delete Task</h3>
+            <p>Are you sure you want to delete this task? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="modal-confirm" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingDeleteUrl = null;
+
+        function openDeleteModal(url) {
+            pendingDeleteUrl = url;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            pendingDeleteUrl = null;
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+            if (pendingDeleteUrl) {
+                window.location.href = pendingDeleteUrl;
+            }
+        });
+    </script>
+
+</body>
+</html>

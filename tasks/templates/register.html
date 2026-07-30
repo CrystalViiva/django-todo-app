@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .logo-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg, #ffffff, #333333, #ffffff);
+            margin: 0 auto 24px auto;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        /* Django's form.as_p renders each field wrapped in <p> with a <label> and <input> */
+        form p {
+            list-style: none;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        form label {
+            display: block;
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-bottom: 6px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 999px;
+            border: 1px solid #2a2a2a;
+            background-color: #161616;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        form input:focus {
+            border-color: #6366f1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 999px;
+            border: none;
+            background-color: #6366f1;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background-color: #5457e0;
+        }
+
+        .terms {
+            font-size: 13px;
+            color: #737373;
+            margin-top: 24px;
+            line-height: 1.5;
+        }
+
+        .terms strong {
+            color: #cfcfcf;
+        }
+
+        .login-link {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-top: 24px;
+        }
+
+        .login-link a {
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .errorlist {
+            list-style: none;
+            color: #f87171;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-container">
+        <div class="logo-circle"></div>
+        <h1>Create your account</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <p style="position: relative;">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.field.widget.input_type == "password" %}
+                        <span onclick="togglePassword('{{ field.id_for_label }}', this)" style="position: absolute; right: 14px; top: 38px; cursor: pointer; font-size: 13px; color: #a0a0a0; user-select: none;">Show</span>
+                    {% endif %}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </p>
+            {% endfor %}
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+
+        <p class="terms">
+            By signing up, you agree to our <strong>Terms of Service</strong> and <strong>Data Processing Agreement</strong>.
+        </p>
+
+        <p class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </p>
+    </div>
+
+<script>
+        function togglePassword(fieldId, toggleEl) {
+            const field = document.getElementById(fieldId);
+            if (field.type === 'password') {
+                field.type = 'text';
+                toggleEl.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                toggleEl.textContent = 'Show';
+            }
+        }
+    </script>
+</body>
+</html>
