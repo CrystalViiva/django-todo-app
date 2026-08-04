@@ -82,20 +82,25 @@ def child(request):
     return render(request, 'child.html')
 
 
+@login_required
 def delete_task(request, id):
-    task = get_object_or_404(Task, id=id)
-    task.delete()
-    return redirect('home')
+
+    task = get_object_or_404(Task, id=id, user=request.user)
+    
+    if request.method == 'POST' or request.method == 'GET':
+        task.delete()
+        messages.success(request, 'Task deleted successfully!')
+        return redirect('home')
 
 
+@login_required
 def update_task(request, id):
-    task = get_object_or_404(Task, id=id)
+    task = get_object_or_404(Task, id=id, user=request.user)
     form = TaskForm(request.POST or None, instance=task)
     if form.is_valid():
         form.save()
         return redirect('home')
     return render(request, 'create_task.html', {'form': form})
-
 
 @login_required
 def profile_view(request):
