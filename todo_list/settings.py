@@ -28,7 +28,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "your-app-name.onerender.com",
+    'todo-app-9h91.onrender.com',
+    '.onrender.com',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
