@@ -2,41 +2,54 @@
 
 A full-stack task management web application built with Django, allowing users to create, view, edit, and delete daily tasks through a clean, styled interface.
 
+[Live Demo](https://todo-app-9h91.onrender.com)
+
+---
+
 ## Features
 
-- **Create tasks** with a title, description, and completion status
-- **View all tasks** in a clean, organized table with serial numbers
-- **Edit existing tasks** using a pre-filled form
-- **Delete tasks** with a confirmation prompt to prevent accidental removal
-- **Status badges** — green "Completed" and yellow "Pending" indicators
-- **Form validation** — task titles must be at least 3 characters long
-- **Admin dashboard** — manage tasks directly through Django's built-in admin panel, with search and filter support
+- **User Authentication:** Secure signup, login, and user session management.
+- **Task Management:** Full CRUD operations (Create, Read, Update, Delete) for daily tasks.
+- **Visual Status Badges:** Green "Completed" and yellow "Pending" indicators.
+- **Form Validation:** Client-side and server-side validation for form submissions.
+- **Admin Dashboard:** Built-in Django admin interface with search and filter support.
+
+---
 
 ## Tech Stack
 
-- **Backend:** Python 3.14, Django 6.0
-- **Database:** SQLite (development)
+- **Backend:** Python 3, Django
+- **Database:** PostgreSQL (Production on Render), SQLite (Local Development)
 - **Frontend:** Django Templates, Bootstrap 5
+- **Deployment:** Render
 - **Version Control:** Git & GitHub
+
+---
 
 ## Project Structure
 
-ALL_ABOUT_DJANGO/
-├── tasks/              # Main app: models, views, forms, templates
-├── todo_project/       # Project settings and URL configuration
+```text
+django-todo-app/
+├── todo_list/          # Project settings and root URL routing
+├── tasks/              # Main application logic (models, views, forms, templates)
 ├── manage.py
-└── requirements.txt
+├── requirements.txt
+└── build.sh            # Render build script
 
 ## Setup Instructions
 
 1. Clone the repository:
 
-git clone <repository-url>
+git clone https://github.com/CrystalViiva/django-todo-app.git
+cd django-todo-app
 
 2. Create and activate a virtual environment:
 
 python -m venv venv
+# On Windows:
 venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 
 3. Install dependencies:
 
@@ -54,15 +67,18 @@ python manage.py runserver
 
 ## What I Learned
 
-This project was built as part of a structured Django curriculum, covering:
-- Project setup and virtual environments
-- URL routing and function-based views
-- Template inheritance with the Django Template Language
-- Models, migrations, and the Django ORM
-- The Django admin interface
-- Forms, validation, and full CRUD operations
-- UI styling with Bootstrap
+This project was built as part of the TechRise Django curriculum, covering:
+
+- Virtual environments, environment security (.env), and dynamic configuration parsing (ALLOWED_HOSTS).
+
+- Function-based views, URL routing, and Django Template Language (DTL).
+
+- Relational data modeling with Django ORM and PostgreSQL integration.
+
+- Full CRUD operations, forms, and custom validation logic.
+
+- Production deployment and web service management on Render.
 
 ## Author
 
-Morita — TechRise Django Curriculum
+Vivian Njoku — TechRise Django Curriculum
